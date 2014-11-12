@@ -36,3 +36,11 @@ def decorate_with_photos(people_map, album_data):
 
 def images_with_faces(album_data):
 	return ifilter(lambda img: 'Faces' in img, album_data['Master Image List'].values())
+
+
+APPLE_EPOCH = datetime(2001, 1, 1)
+POSIX_EPOCH = datetime(1970, 1, 1)
+APPLE_OFFSET = (apple_epoch - posix_epoch).total_seconds()
+
+def timestamp_to_date(timestamp):
+  return datetime.fromtimestamp(APPLE_OFFSET + timestamp)
