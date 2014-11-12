@@ -10,7 +10,7 @@ def compare(birth_date_a, photo_dir_a, birth_date_b, photo_dir_b):
 	for i in range(0, 400):
 		print "{}: {}{}".format(i, '#' * len(agemap_a[i]), '*' * len(agemap_b[i]))
 
-
+# map of age -> [photo paths]
 def age_map(birth_date, photo_dir):
 	m = defaultdict(list)
 	for file_name in os.listdir(photo_dir):
@@ -32,6 +32,7 @@ def get_photo_date(full_path):
 
 	if not datestr:
 		print "skipping {}: it has no date data".format(full_path)
+    #TODO check for other date info/tags
 		return 
 
 	return datetime.strptime(datestr, "%Y:%m:%d %H:%M:%S")

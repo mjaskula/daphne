@@ -12,6 +12,7 @@ def load(album_data_file):
 	print("Loaded {}".format(album_data_file))
 	return album_data
 
+#map of face_key -> {face_data, list of image_data}
 def build_people_map(album_data):
 	people_map = face_data(album_data)
 
@@ -19,6 +20,7 @@ def build_people_map(album_data):
 
 	return people_map
 
+#map of face_key -> {face_data}
 def face_data(album_data):
 	# return {data['name']:data for id, data in album_data['List of Faces'].iteritems()}
 	faces = album_data['List of Faces']
