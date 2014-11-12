@@ -49,4 +49,4 @@ POSIX_EPOCH = datetime(1970, 1, 1)
 APPLE_OFFSET = (APPLE_EPOCH - POSIX_EPOCH).total_seconds()
 
 def timestamp_to_date(timestamp):
-  return datetime.fromtimestamp(APPLE_OFFSET + timestamp)
+  return datetime.fromtimestamp(APPLE_OFFSET + timestamp).isoformat()
