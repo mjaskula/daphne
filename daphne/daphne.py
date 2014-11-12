@@ -1,5 +1,6 @@
-import logging as log
+from datetime import datetime
 from itertools import ifilter
+import logging as log
 
 import plistlib
 
@@ -31,6 +32,7 @@ def face_data(album_data):
 
 def decorate_with_photos(people_map, album_data):
   for image in images_with_faces(album_data):
+    image['date'] = timestamp_to_date(image['DateAsTimerInterval'])
     for face in image['Faces']:
       people_map[face['face key']]['images'].append(image)
 
@@ -40,7 +42,7 @@ def images_with_faces(album_data):
 
 APPLE_EPOCH = datetime(2001, 1, 1)
 POSIX_EPOCH = datetime(1970, 1, 1)
-APPLE_OFFSET = (apple_epoch - posix_epoch).total_seconds()
+APPLE_OFFSET = (APPLE_EPOCH - POSIX_EPOCH).total_seconds()
 
 def timestamp_to_date(timestamp):
   return datetime.fromtimestamp(APPLE_OFFSET + timestamp)
