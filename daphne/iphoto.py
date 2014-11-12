@@ -1,10 +1,12 @@
 from datetime import datetime
 from itertools import ifilter
 import logging as log
+import os
 
 import plistlib
 
-def load_people_from_album_data_file(album_data_file):
+#map of face_key -> {face_data, list of image_data}
+def load_people(album_data_file=os.environ['HOME'] + '/Pictures/iPhoto Library/AlbumData.xml'):
   return build_people_map(load(album_data_file))
 
 def load(album_data_file):
