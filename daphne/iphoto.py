@@ -7,7 +7,9 @@ import plistlib
 
 #map of face_key -> {face_data, list of image_data}
 def load_people(album_data_file=os.environ['HOME'] + '/Pictures/iPhoto Library/AlbumData.xml'):
-  return build_people_map(load(album_data_file))
+  people = build_people_map(load(album_data_file))
+  print("Loaded {} people".format(len(people)))
+  return people
 
 def load(album_data_file):
   print("Loading {}".format(album_data_file))
@@ -28,7 +30,7 @@ def face_data(album_data):
   # return {data['name']:data for id, data in album_data['List of Faces'].iteritems()}
   faces = album_data['List of Faces']
   for face in faces.values():
-    print "{} - {} - {}".format(face['key'], face['PhotoCount'], face['name'])
+    # print "{} - {} - {}".format(face['key'], face['PhotoCount'], face['name'])
     face['images'] = []
   return faces
 
