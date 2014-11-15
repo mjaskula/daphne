@@ -1,6 +1,7 @@
 from __future__ import print_function
 from datetime import datetime
 import json
+import readline
 
 import iphoto
 
