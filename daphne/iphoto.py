@@ -1,3 +1,4 @@
+from  collections import defaultdict
 from datetime import datetime
 from itertools import ifilter
 import logging as log
@@ -49,4 +50,15 @@ POSIX_EPOCH = datetime(1970, 1, 1)
 APPLE_OFFSET = (APPLE_EPOCH - POSIX_EPOCH).total_seconds()
 
 def timestamp_to_date(timestamp):
-  return datetime.fromtimestamp(APPLE_OFFSET + timestamp).isoformat()
+  return datetime.fromtimestamp(APPLE_OFFSET + timestamp)
+
+# map of age -> [photo paths]
+def age_map(person, birthday):
+  m = defaultdict(list)
+  for image in person['images']:
+    image_date = image['date']
+    age = (image['date'] - birthday).days
+    m[age].append(image)
+  person.pop('images')
+  return m
+
