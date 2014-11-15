@@ -52,13 +52,26 @@ APPLE_OFFSET = (APPLE_EPOCH - POSIX_EPOCH).total_seconds()
 def timestamp_to_date(timestamp):
   return datetime.fromtimestamp(APPLE_OFFSET + timestamp)
 
+def pop_all(d, *keys):
+  for key in keys:
+    if key in d:
+      d.pop(key)
+
 # map of age -> [photo paths]
 def age_map(person, birthday):
   m = defaultdict(list)
   for image in person['images']:
     image_date = image['date']
     age = (image['date'] - birthday).days
+    pop_all(image, 'Comment', 'Rating', 'ModDateAsTimerInterval', 
+            'MetaModDateAsTimerInterval', 'Caption', 'ThumbPath', 'GUID', 
+            'Roll', 'longitude', 'latitude')
+
     m[age].append(image)
   person.pop('images')
   return m
+
+def process_person(person, birthday):
+  person['age_map'] = age_map(person, birthday)
+  pop_all(person, 'key image face index', 'key image', 'Order')
 

@@ -42,7 +42,7 @@ def main():
     print("({}/{}) ".format(i, size), end='')
     if ask_use(person['name']):
       birthday = ask_birthday(person['name'])
-      person['age_map'] = iphoto.age_map(person, birthday)
+      iphoto.process_person(person, birthday)
     else:
       people.pop(key)
   write(people, "daphne_data.json")
