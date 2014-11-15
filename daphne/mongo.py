@@ -25,3 +25,8 @@ def _write_image(image):
 
 def _write_person(person):
   people.update({'key': person['key']}, person, upsert=True)
+
+def get_images(key, days_min, days_max):
+  return images.find({'key': key, 
+                      'age': {'$gt': days_min, 
+                              '$lt': days_max}})
