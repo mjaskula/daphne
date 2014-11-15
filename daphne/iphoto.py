@@ -39,7 +39,7 @@ def decorate_with_photos(people_map, album_data):
   for image in images_with_faces(album_data):
     image['date'] = timestamp_to_date(image['DateAsTimerInterval'])
     for face in image['Faces']:
-      people_map[face['face key']]['images'].append(image)
+      people_map[face['face key']]['images'].append(image.copy())
 
 def images_with_faces(album_data):
   return ifilter(lambda img: 'Faces' in img, album_data['Master Image List'].values())
@@ -58,20 +58,18 @@ def pop_all(d, *keys):
       d.pop(key)
 
 # map of age -> [photo paths]
-def age_map(person, birthday):
+def process_images(person, birthday):
   m = defaultdict(list)
   for image in person['images']:
     image_date = image['date']
     age = (image['date'] - birthday).days
+    image['age'] = age
+    image['key'] = person['key']
     pop_all(image, 'Comment', 'Rating', 'ModDateAsTimerInterval', 
             'MetaModDateAsTimerInterval', 'Caption', 'ThumbPath', 'GUID', 
             'Roll', 'longitude', 'latitude')
 
-    m[age].append(image)
-  person.pop('images')
-  return m
-
 def process_person(person, birthday):
-  person['age_map'] = age_map(person, birthday)
+  process_images(person, birthday)
   pop_all(person, 'key image face index', 'key image', 'Order')
 

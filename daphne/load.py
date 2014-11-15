@@ -4,6 +4,7 @@ import json
 import readline
 
 import iphoto
+import mongo as db
 
 def yes_no(input):
   return input == 'y' or input == 'Y'
@@ -25,7 +26,7 @@ def ask(question, answer_conversion):
         print("  Sorry, I didn't understand that.")
         continue
 
-def write(data, file_name):
+def write_file(data, file_name):
   with open(file_name, 'wb') as f:
     json.dump(data, f, indent=2, cls=DateTimeEncoder)
 
@@ -36,17 +37,21 @@ class DateTimeEncoder(json.JSONEncoder):
     # Let the base class default method raise the TypeError
     return json.JSONEncoder.default(self, obj)
 
-def main():
+def load_people():
   people = iphoto.load_people()
   size = len(people)
   for i,(key,person) in enumerate(people.items()):
     print("({}/{}) ".format(i, size), end='')
     if ask_use(person['name']):
       birthday = ask_birthday(person['name'])
+      person['birthday'] = birthday
       iphoto.process_person(person, birthday)
-    else:
-      people.pop(key)
-  write(people, "daphne_data.json")
+      yield person
+
+def main():
+  for person in load_people():
+    db.write(person)
+  # write_file(people, "daphne_data.json")
 
 
 if __name__== '__main__':
