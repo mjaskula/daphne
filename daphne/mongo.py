@@ -1,10 +1,15 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 
 mongo_uri = 'mongodb://localhost:27017/'
 
 db = MongoClient(mongo_uri).daphne
 images = db.images
+images.create_index([('key', ASCENDING), 
+                    ('ImagePath', ASCENDING)], 
+                    unique=True)
+images.create_index([('age', ASCENDING)])
 people = db.people
+people.create_index('key', unique=True)
 
 
 def write(person):
@@ -14,8 +19,9 @@ def write(person):
   _write_person(person)
 
 def _write_image(image):
-  print "writing {}".format(image.get('_id', None))
-  images.insert(image)
+  images.update({'key': image['key'], 'ImagePath': image['ImagePath']}, 
+                 image, 
+                 upsert=True)
 
 def _write_person(person):
-  people.insert(person)
+  people.update({'key': person['key']}, person, upsert=True)
