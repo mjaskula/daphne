@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, make_response
 from datetime import datetime
 
 
@@ -6,7 +6,7 @@ app = Flask("daphne")
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+  return make_response(open('templates/index.html').read())
 
 #Old endpoints
 

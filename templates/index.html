@@ -1,8 +1,11 @@
 <!doctype html>
-<html xmlns:ng="http://angularjs.org" ng-app ng-strict-di>
-  <body ng-controler="DaphneControler">
-    <script src="{{ url_for('static', filename='angular.js') }}"></script>
-    <script src="{{ url_for('static', filename='daphne.js') }}"></script>
-    {{greeting}}
+<html xmlns:ng="http://angularjs.org" ng-app='daphne' ng-strict-di>
+  <head>
+    <script src="/static/lib/angular/angular.js"></script>
+    <script src="/static/js/daphne.js"></script>
+  </head>
+  <body ng-controller="DaphneController">
+    {{greeting}}!!!
+    {{'holy' + ' crap'}}!!!
   </body>
 </html>
