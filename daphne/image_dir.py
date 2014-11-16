@@ -41,9 +41,5 @@ def get_tags(file_name):
   with open(file_name, 'rb') as f:
      return exifread.process_file(f)
 
-def main():
-  compare(datetime(2011, 1,  6), '/Users/matthew/Documents/devel/daphne/daphne/static/evelyn',
-      datetime(2013, 6, 15), '/Users/matthew/Documents/devel/daphne/daphne/static/penelope')
-
 if __name__== '__main__':
   main()
