@@ -1,15 +1,14 @@
-from flask import Flask
+from flask import Flask, render_template
 from datetime import datetime
 
-import daphne
 
 app = Flask("daphne")
 
-@app.route("/load")
-def load():
-  app.age_map_a = daphne.age_map(datetime(2011, 1,  6), '/Users/matthew/Documents/devel/daphne/daphne/static/evelyn')
-  app.age_map_b = daphne.age_map(datetime(2013, 6, 15), '/Users/matthew/Documents/devel/daphne/daphne/static/penelope')
-  return "loaded"
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+#Old endpoints
 
 @app.route("/at_age/<age>")
 def at_age(age=0):
